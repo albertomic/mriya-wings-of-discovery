@@ -1,230 +1,121 @@
 <!doctype html>
 <html lang="it">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Mriya – Wings of Discovery | Prototipo v0.1</title>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mriya – Wings of Discovery | v0.2</title>
 <style>
-  :root { color-scheme: dark; }
-  * { box-sizing: border-box; }
-  body { margin:0; background:#08121c; color:#e8f0f5; font-family:Arial,Helvetica,sans-serif; }
-  #shell { min-height:100vh; display:flex; flex-direction:column; }
-  header { display:flex; align-items:center; justify-content:space-between; gap:16px; padding:13px 20px; background:#101f2d; border-bottom:1px solid #294254; }
-  .brand { font-size:18px; font-weight:700; letter-spacing:.7px; }
-  .brand small { display:block; color:#9fb5c5; font-size:11px; font-weight:400; letter-spacing:2px; margin-top:4px; }
-  #status { color:#a8c3d4; font-size:12px; text-align:right; }
-  main { width:min(1400px,100%); margin:0 auto; padding:14px; display:grid; grid-template-columns:minmax(0,1fr) 290px; gap:14px; flex:1; }
-  #game-wrap { min-width:0; background:#0b1925; border:1px solid #294254; border-radius:10px; overflow:hidden; }
-  #game { width:100%; aspect-ratio:16/9; }
-  #game canvas { display:block; width:100%!important; height:100%!important; }
-  aside { background:#101f2d; border:1px solid #294254; border-radius:10px; padding:15px; display:flex; flex-direction:column; gap:13px; }
-  h2 { font-size:15px; margin:0; color:#d8e8f2; }
-  .panel { background:#0a1722; border:1px solid #263e50; border-radius:8px; padding:11px; }
-  .muted { color:#91aaba; font-size:12px; line-height:1.5; }
-  #maria { font-size:13px; line-height:1.55; min-height:92px; color:#d4e5ef; }
-  .metric { display:flex; justify-content:space-between; gap:8px; font-size:12px; margin:7px 0; color:#a9bfcd; }
-  .metric b { color:#e8f2f8; font-weight:600; }
-  button { background:#1c4057; color:#edf7fc; border:1px solid #47718a; padding:9px 11px; border-radius:6px; cursor:pointer; font-weight:600; }
-  button:hover { background:#285773; }
-  .controls { display:flex; flex-wrap:wrap; gap:7px; }
-  footer { padding:9px 18px 14px; color:#829bab; font-size:11px; text-align:center; }
-  @media(max-width:850px) { main { grid-template-columns:1fr; } aside { display:grid; grid-template-columns:1fr 1fr; } aside h2:first-child { grid-column:1/-1; } }
-  @media(max-width:560px) { aside { display:flex; } header { align-items:flex-start; flex-direction:column; } #status { text-align:left; } }
-</style>
-</head>
+*{box-sizing:border-box}body{margin:0;background:#07121e;color:#e9f2f8;font-family:Arial,Helvetica,sans-serif}
+header{height:74px;padding:12px 22px;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(90deg,#0b2941,#102c46 60%,#091a2b);border-bottom:1px solid #31536d}
+.logo{font-size:21px;font-weight:800;letter-spacing:1px}.logo small{display:block;font-size:10px;letter-spacing:2px;color:#9ec4d8;margin-top:4px;font-weight:500}
+#status{font-size:12px;color:#9fc1d4}
+main{max-width:1600px;margin:auto;padding:16px;display:grid;grid-template-columns:minmax(0,1fr) 310px;gap:14px}
+#stage{min-width:0;border:1px solid #31536d;border-radius:10px;overflow:hidden;background:#0b1b2a;box-shadow:0 12px 40px #0008}
+#game{width:100%;aspect-ratio:3.067/1}
+#game canvas{display:block;width:100%!important;height:100%!important}
+aside{background:linear-gradient(180deg,#10263a,#0a1928);border:1px solid #31536d;border-radius:10px;padding:15px;display:flex;flex-direction:column;gap:12px}
+h2{font-size:14px;letter-spacing:.7px;margin:0 0 9px;color:#bfe5f5}
+.panel{background:#071725;border:1px solid #29475f;border-radius:8px;padding:12px}
+#maria{font-size:13px;line-height:1.55;min-height:85px;color:#e0edf4}
+.metric{display:flex;justify-content:space-between;gap:8px;font-size:12px;margin:8px 0;color:#9db7c8}.metric b{color:#e5f2f8;text-align:right}
+.buttons{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+button{cursor:pointer;color:#e9f6fc;background:linear-gradient(#1b5274,#12344d);border:1px solid #4d91b5;border-radius:7px;padding:10px 8px;font-weight:700;font-size:12px}
+button:hover{filter:brightness(1.2)}button:disabled{opacity:.4;cursor:not-allowed}
+.note{font-size:11px;line-height:1.5;color:#8faaba}
+footer{text-align:center;color:#7893a5;font-size:11px;padding:0 16px 16px}
+@media(max-width:950px){main{grid-template-columns:1fr}aside{display:grid;grid-template-columns:1fr 1fr}aside>h2{grid-column:1/-1}}
+@media(max-width:600px){header{height:auto;align-items:flex-start;flex-direction:column;gap:7px}aside{display:flex}}
+</style></head>
 <body>
-<div id="shell">
-<header>
-  <div class="brand">Mriya – Wings of Discovery <small>SCIENTIFIC AIRBORNE RESEARCH PLATFORM · PROTOTYPE 0.1</small></div>
-  <div id="status">SIMULAZIONE LOCALE · BUILD 0.1.0</div>
-</header>
+<header><div class="logo">MRIYA <span style="color:#70c9ec">—</span> WINGS OF DISCOVERY<small>SCIENTIFIC AIRBORNE RESEARCH PLATFORM</small></div><div id="status">PROTOTIPO v0.2 · SIMULAZIONE</div></header>
 <main>
-  <section id="game-wrap"><div id="game"></div></section>
-  <aside>
-    <h2>M.A.R.I.A. <span style="color:#7fc4df;font-size:11px">● ONLINE</span></h2>
-    <div class="panel"><div id="maria">Buongiorno. Sistemi di bordo in modalità dimostrativa. Benvenuto a bordo del Mriya.</div></div>
-    <div class="panel">
-      <h2 style="margin-bottom:9px">Stato missione</h2>
-      <div class="metric"><span>Modulo selezionato</span><b id="module-name">ATM-01</b></div>
-      <div class="metric"><span>Automazione</span><b id="automation">Livello 1 · Manuale</b></div>
-      <div class="metric"><span>Operatore</span><b id="operator">Disponibile</b></div>
-      <div class="metric"><span>Campionamento</span><b id="sampling">In attesa</b></div>
-    </div>
-    <div>
-      <h2 style="margin-bottom:9px">Comandi</h2>
-      <div class="controls">
-        <button id="view-btn">Vista esterna</button>
-        <button id="lab-btn">Vai ad ATM-01</button>
-        <button id="sample-btn">Avvia analisi</button>
-        <button id="upgrade-btn">Upgrade L2</button>
-      </div>
-      <p class="muted">Movimento: ← → oppure A / D. Interagisci con le postazioni avvicinandoti e premendo E. Puoi anche usare i pulsanti qui sopra.</p>
-    </div>
-    <div class="panel muted">
-      <b style="color:#d8e8f2">Nota prototipo</b><br>
-      Questa è una prima build esplorabile con ambienti e interazioni provvisorie. Dimensioni, strumenti e disposizione sono concept di gioco, non una planimetria tecnica certificata dell'aeromobile reale.
-    </div>
-  </aside>
-</main>
-<footer>Prototipo iniziale giocabile · Le funzioni scientifiche sono simulate · Prossimo passo: ampliamento ambienti, personaggi e sistemi</footer>
+<section id="stage"><div id="game"></div></section>
+<aside>
+<h2>M.A.R.I.A. <span style="color:#57d4ee">● ONLINE</span></h2>
+<div class="panel"><div id="maria">Benvenuto a bordo. La visualizzazione interna del Mriya è pronta. Puoi esplorare la stiva e raggiungere ATM-01.</div></div>
+<div class="panel"><h2>STATO DI BORDO</h2>
+<div class="metric"><span>Ambiente</span><b id="environment">Stiva principale</b></div>
+<div class="metric"><span>Modulo</span><b id="module">ATM-01</b></div>
+<div class="metric"><span>Automazione</span><b id="automation">Livello 1 · Manuale</b></div>
+<div class="metric"><span>Analisi</span><b id="analysis">In attesa</b></div>
 </div>
+<div><h2>COMANDI</h2><div class="buttons">
+<button id="view">Vista esterna</button><button id="lab">Raggiungi ATM-01</button>
+<button id="analyze">Avvia analisi</button><button id="upgrade">Sblocca automazione L2</button>
+<button id="zoomIn">Zoom +</button><button id="zoomOut">Zoom −</button>
+</div><p class="note">Movimento: ← → oppure A / D. Premi E vicino al modulo ATM-01 per interagire. Puoi anche usare i comandi qui sopra.</p></div>
+<div class="panel note"><b style="color:#c5e5f2">Nota di progettazione</b><br>Questa è una prima direzione visiva, non la ricostruzione tecnica definitiva dell'aereo. La conversione scientifica e le attrezzature sono elementi di fantasia plausibile; la planimetria sarà raffinata usando i riferimenti reali già definiti.</div>
+</aside></main>
+<footer>Build 0.2 · Ambiente illustrato di concept · Prossimo obiettivo: rifinire la geometria dell'aereo e rendere esplorabili i diversi livelli</footer>
 <script src="https://cdn.jsdelivr.net/npm/phaser@3.80.1/dist/phaser.min.js"></script>
 <script>
-const ui = {
-  maria: document.getElementById('maria'),
-  module: document.getElementById('module-name'),
-  automation: document.getElementById('automation'),
-  operator: document.getElementById('operator'),
-  sampling: document.getElementById('sampling'),
-  view: document.getElementById('view-btn')
-};
-let gameScene;
-function say(msg){ ui.maria.textContent = msg; }
-class MriyaScene extends Phaser.Scene {
-  constructor(){ super('mriya'); this.interior=true; this.level=1; this.sampled=false; }
-  create(){
-    gameScene=this;
-    this.cameras.main.setBackgroundColor('#0a1722');
-    this.drawInterior();
-    this.player=this.add.container(180,390);
-    const body=this.add.ellipse(0,0,22,35,0xe5b96e);
-    const head=this.add.circle(0,-24,9,0xf1c99d);
-    const legs=this.add.line(0,16,0,0,-3,22,0x253b4b,1).setLineWidth(4);
-    this.player.add([body,head,legs]);
-    this.physics.world.setBounds(20,0,1160,650);
-    this.physics.add.existing(this.player);
-    this.player.body.setCollideWorldBounds(true);
-    this.keys=this.input.keyboard.addKeys('LEFT,RIGHT,A,D,E');
-    this.add.text(28,22,'STIVA PRINCIPALE · CONFIGURAZIONE SCIENTIFICA', {font:'bold 15px Arial',color:'#d9e8f1'}).setScrollFactor(0);
-    this.hint=this.add.text(28,54,'Esplora l’area e raggiungi la postazione ATM-01', {font:'12px Arial',color:'#91adbd'});
-    this.physics.world.setBounds(0,0,1200,675);
-    this.cameras.main.setBounds(0,0,1200,675);
-    this.cameras.main.startFollow(this.player,true,0.08,0.08);
-    this.input.keyboard.on('keydown-E',()=>this.interact());
-    document.getElementById('view-btn').onclick=()=>this.toggleView();
-    document.getElementById('lab-btn').onclick=()=>this.goLab();
-    document.getElementById('sample-btn').onclick=()=>this.runSample();
-    document.getElementById('upgrade-btn').onclick=()=>this.upgrade();
-    this.scale.on('resize',()=>{});
+const $=id=>document.getElementById(id);let sceneRef;
+function speak(t){$('maria').textContent=t}
+class Mriya extends Phaser.Scene{
+ constructor(){super('mriya');this.interior=true;this.level=1;this.zoom=1;this.playerX=610;this.sampled=false}
+ preload(){this.load.image('inside','assets/mriya_interior.jpg');this.load.image('outside','assets/mriya_exterior.jpg')}
+ create(){
+  sceneRef=this;this.cameras.main.setBackgroundColor('#071522');
+  this.bg=this.add.image(0,0,'inside').setOrigin(0,0);this.bg.setDisplaySize(1672,545);
+  this.drawLabels();
+  this.player=this.add.container(this.playerX,418);
+  const glow=this.add.circle(0,0,23,0x21c8ff,.16);
+  const body=this.add.ellipse(0,-20,17,34,0x203e55).setStrokeStyle(2,0x6edbff);
+  const head=this.add.circle(0,-45,8,0xe2b994).setStrokeStyle(1,0x6edbff);
+  const pack=this.add.rectangle(-9,-19,5,22,0xe5b84f);
+  this.player.add([glow,body,head,pack]);
+  this.cameras.main.setBounds(0,0,1672,545);
+  this.cameras.main.setZoom(1);
+  this.keys=this.input.keyboard.addKeys('LEFT,RIGHT,A,D,E');
+  this.input.keyboard.on('keydown-E',()=>this.interact());
+  $('view').onclick=()=>this.toggleView();$('lab').onclick=()=>this.goLab();
+  $('analyze').onclick=()=>this.analyze();$('upgrade').onclick=()=>this.upgrade();
+  $('zoomIn').onclick=()=>this.setZoom(Math.min(1.55,this.zoom+.15));
+  $('zoomOut').onclick=()=>this.setZoom(Math.max(.85,this.zoom-.15));
+  this.addHotspot();
+ }
+ drawLabels(){
+  this.add.rectangle(820,25,360,36,0x071a2b,.82).setStrokeStyle(1,0x4c9fc3);
+  this.add.text(650,14,'STIVA PRINCIPALE · CONFIGURAZIONE SCIENTIFICA',{font:'bold 15px Arial',color:'#d9f2ff'});
+  this.add.rectangle(1010,486,250,34,0x061a2b,.9).setStrokeStyle(1,0x4aa4c8);
+  this.add.text(905,475,'ATM-01 · LABORATORIO ATMOSFERICO',{font:'bold 13px Arial',color:'#9ce8ff'});
+ }
+ addHotspot(){
+  this.hotspot=this.add.circle(1010,325,65,0x36cfff,.07).setStrokeStyle(2,0x52d8ff,.9);
+  this.hotspot.setInteractive({useHandCursor:true});
+  this.hotspot.on('pointerdown',()=>this.interact());
+  this.pulse=this.tweens.add({targets:this.hotspot,alpha:{from:.25,to:1},scale:{from:.9,to:1.12},duration:1100,yoyo:true,repeat:-1});
+ }
+ update(){
+  if(!this.interior)return;
+  let v=0;if(this.keys.LEFT.isDown||this.keys.A.isDown)v=-3.3;if(this.keys.RIGHT.isDown||this.keys.D.isDown)v=3.3;
+  this.playerX=Phaser.Math.Clamp(this.playerX+v,70,1580);this.player.x=this.playerX;
+  if(this.playerX>850&&this.playerX<1160){$('environment').textContent='ATM-01';}
+  else $('environment').textContent='Stiva principale';
+ }
+ toggleView(){
+  this.interior=!this.interior;this.children.removeAll();this.tweens.killAll();
+  if(this.interior){
+   this.bg=this.add.image(0,0,'inside').setOrigin(0,0).setDisplaySize(1672,545);this.drawLabels();
+   this.player=this.add.container(this.playerX,418);
+   this.player.add([this.add.circle(0,0,23,0x21c8ff,.16),this.add.ellipse(0,-20,17,34,0x203e55).setStrokeStyle(2,0x6edbff),this.add.circle(0,-45,8,0xe2b994).setStrokeStyle(1,0x6edbff)]);
+   this.addHotspot();this.cameras.main.setBounds(0,0,1672,545);$('environment').textContent='Stiva principale';$('view').textContent='Vista esterna';
+   speak('Vista interna attivata. La stiva è il cuore operativo della piattaforma scientifica. Raggiungi ATM-01 per iniziare.');
+  }else{
+   this.bg=this.add.image(0,0,'outside').setOrigin(0,0).setDisplaySize(1672,545);
+   this.add.rectangle(836,510,1672,70,0x071b2a,.7);
+   this.add.text(45,475,'ANTONOV AN-225 MRIYA',{font:'bold 27px Arial',color:'#102d42',stroke:'#eaf6fb',strokeThickness:2});
+   this.add.text(48,510,'Piattaforma scientifica internazionale · scenario alternativo',{font:'14px Arial',color:'#173c55'});
+   $('view').textContent='Vista interna';speak('Vista esterna attivata. Il Mriya è pronto per la prossima missione.');
   }
-  drawInterior(){
-    this.children.removeAll();
-    this.cameras.main.setBackgroundColor('#101d27');
-    // cargo-bay floor and fuselage shell
-    this.add.rectangle(600,365,1200,500,0x172a38).setStrokeStyle(3,0x5b7a8d);
-    this.add.rectangle(600,610,1200,80,0x263b49);
-    for(let x=35;x<1200;x+=80){
-      this.add.line(x,575,x,645,x,0x526879,0.45).setLineWidth(1);
-      this.add.circle(x,594,3,0x8aa0ad);
-    }
-    this.add.rectangle(600,112,1150,42,0x263f50);
-    this.add.text(45,96,'STRUTTURA INTERNA · STIVA PRESSURIZZATA', {font:'bold 14px Arial',color:'#d6e5ed'});
-    // left cargo pallets
-    for(let i=0;i<3;i++){
-      const x=100+i*112;
-      this.add.rectangle(x,500,82,90,0x536575).setStrokeStyle(2,0x93a9b6);
-      this.add.rectangle(x,450,82,10,0x9caaad);
-      this.add.text(x-30,490,'CARICO',{font:'10px Arial',color:'#eef3f5'});
-    }
-    // ATM lab footprint on right
-    this.add.rectangle(865,385,420,340,0x1c3543).setStrokeStyle(2,0x68a0b7);
-    this.add.text(675,222,'ATM-01  ·  LABORATORIO ATMOSFERICO',{font:'bold 15px Arial',color:'#9bd8ed'});
-    this.add.rectangle(760,370,105,185,0x385365).setStrokeStyle(2,0x8ab5c8);
-    this.add.text(720,350,'ANALISI GAS',{font:'12px Arial',color:'#e3f2f8'});
-    this.add.rectangle(890,370,105,185,0x385365).setStrokeStyle(2,0x8ab5c8);
-    this.add.text(850,350,'AEROSOL',{font:'12px Arial',color:'#e3f2f8'});
-    this.add.rectangle(1030,455,115,90,0x294858).setStrokeStyle(2,0x78a9bd);
-    this.add.text(990,440,'POSTAZIONE',{font:'11px Arial',color:'#e3f2f8'});
-    this.add.circle(1040,250,34,0x254a5e).setStrokeStyle(2,0x82c6df);
-    this.add.text(1005,242,'ATM',{font:'bold 17px Arial',color:'#bceafa'});
-    this.add.text(990,292,'CONTROLLO',{font:'10px Arial',color:'#a9c8d6'});
-    this.add.rectangle(600,565,1180,8,0x87a4b3,0.5);
-    this.add.text(55,650,'AREA LOGISTICA', {font:'11px Arial',color:'#a8bdc8'});
-    this.add.text(780,650,'AREA SCIENTIFICA', {font:'11px Arial',color:'#a8bdc8'});
-    this.add.text(28,22,'STIVA PRINCIPALE · CONFIGURAZIONE SCIENTIFICA',{font:'bold 15px Arial',color:'#d9e8f1'});
-  }
-  drawExterior(){
-    this.children.removeAll();
-    this.cameras.main.setBackgroundColor('#8bb5ce');
-    const g=this.add.graphics();
-    g.fillGradientStyle(0x8bb5ce,0x8bb5ce,0xd7e3e8,0xd7e3e8,1);
-    g.fillRect(0,0,1200,675);
-    g.fillStyle(0x6d8d9a,1); g.fillRect(0,535,1200,140);
-    g.fillStyle(0x425866,1); g.fillRect(0,600,1200,75);
-    // aircraft silhouette, deliberately stylized placeholder
-    g.fillStyle(0xe7edf0,1);
-    g.fillRoundedRect(150,280,850,105,48);
-    g.fillTriangle(930,280,1080,332,930,385);
-    g.fillTriangle(500,300,660,175,760,300);
-    g.fillTriangle(510,365,690,470,780,365);
-    g.fillTriangle(170,280,115,225,250,280);
-    g.fillTriangle(170,385,110,445,260,385);
-    g.fillStyle(0x425f70,1);
-    for(let i=0;i<6;i++) g.fillEllipse(390+i*58,325,22,55);
-    g.fillStyle(0x6d8999,1);
-    for(let i=0;i<16;i++) g.fillCircle(250+i*42,397,7);
-    g.fillStyle(0x344c5b,1); g.fillRoundedRect(205,385,640,12,5);
-    this.add.text(35,35,'ANTONOV AN-225 MRIYA · VISTA ESTERNA',{font:'bold 18px Arial',color:'#102c3d'});
-    this.add.text(35,65,'Piattaforma scientifica internazionale · scenario alternativo',{font:'14px Arial',color:'#24495d'});
-    this.add.text(35,630,'Premi “Vista interna” per tornare a bordo',{font:'13px Arial',color:'#17394c'});
-  }
-  update(){
-    if(!this.player || !this.interior) return;
-    const speed=230;
-    let vx=0;
-    if(this.keys.LEFT.isDown||this.keys.A.isDown) vx=-speed;
-    if(this.keys.RIGHT.isDown||this.keys.D.isDown) vx=speed;
-    this.player.body.setVelocityX(vx);
-    this.player.body.setVelocityY(0);
-    this.player.y=390;
-    if(this.player.x>690 && this.player.x<1120) this.hint.setText('ATM-01: premi E vicino alla postazione per interagire');
-    else this.hint.setText('Esplora la stiva · raggiungi ATM-01 sulla destra');
-  }
-  toggleView(){
-    this.interior=!this.interior;
-    if(this.player) this.player.destroy();
-    this.drawInterior();
-    if(!this.interior) this.drawExterior();
-    else {
-      this.player=this.add.container(180,390);
-      this.player.add([this.add.ellipse(0,0,22,35,0xe5b96e),this.add.circle(0,-24,9,0xf1c99d)]);
-      this.physics.add.existing(this.player);
-      this.player.body.setCollideWorldBounds(true);
-      this.cameras.main.setBounds(0,0,1200,675);
-      this.cameras.main.startFollow(this.player,true,0.08,0.08);
-    }
-    ui.view.textContent=this.interior?'Vista esterna':'Vista interna';
-    say(this.interior?'Vista interna attivata. La stiva scientifica è pronta per l’esplorazione.':'Vista esterna attivata. Il Mriya è pronto per la prossima missione.');
-  }
-  goLab(){
-    if(!this.interior){ this.toggleView(); }
-    this.player.x=1010;
-    say('Sei arrivato nell’area ATM-01. Avvicinati alla postazione e premi E, oppure avvia direttamente l’analisi.');
-  }
-  interact(){
-    if(!this.interior) return;
-    if(this.player.x>690 && this.player.x<1140) this.runSample();
-    else say('Nessuna postazione interattiva nelle vicinanze. Prosegui verso ATM-01.');
-  }
-  runSample(){
-    if(!this.interior){ say('Per avviare una procedura, entra prima nella stiva.'); return; }
-    this.sampled=true;
-    ui.sampling.textContent='Analisi completata';
-    ui.operator.textContent=this.level===1?'Impegnato · analisi':'Supervisione';
-    say(this.level===1
-      ? 'Sequenza manuale avviata. Operatore: verifica filtri, avvia l’analizzatore e registra il campione. Acquisizione dimostrativa completata.'
-      : 'Sequenza assistita avviata da M.A.R.I.A. Acquisizione e registrazione dati automatiche; operatore in supervisione. Analisi dimostrativa completata.');
-  }
-  upgrade(){
-    if(this.level>=2){say('ATM-01 è già al livello 2 in questa build dimostrativa. Gli ulteriori livelli saranno introdotti nelle prossime versioni.');return;}
-    this.level=2;
-    ui.automation.textContent='Livello 2 · Assistita';
-    ui.operator.textContent='Supervisione';
-    say('Upgrade ATM-01 completato. Da ora sono disponibili sequenze programmate e registrazione digitale automatica. Il tecnico supervisiona e interviene in caso di anomalie.');
-  }
+ }
+ setZoom(z){this.zoom=z;this.cameras.main.setZoom(z);if(this.interior)this.cameras.main.centerOn(this.playerX,270)}
+ goLab(){if(!this.interior)this.toggleView();this.playerX=1010;this.player.x=this.playerX;this.cameras.main.centerOn(this.playerX,270);speak('Sei arrivato davanti al laboratorio ATM-01. Premi E oppure Avvia analisi per iniziare la procedura.')}
+ interact(){if(!this.interior)return;if(Math.abs(this.playerX-1010)<190)this.analyze();else speak('Prosegui lungo la stiva verso destra per raggiungere ATM-01.')}
+ analyze(){if(!this.interior){speak('Entra nella vista interna per utilizzare le postazioni scientifiche.');return}
+ if(Math.abs(this.playerX-1010)>220){this.goLab();return}
+ $('analysis').textContent='Completata';speak(this.level===1?'Procedura manuale completata. L’operatore prepara il filtro, avvia l’analizzatore e registra il campione. Dati dimostrativi acquisiti.':'Procedura assistita completata. M.A.R.I.A. ha programmato l’acquisizione e registrato i dati; l’operatore resta in supervisione.');}
+ upgrade(){if(this.level===2){speak('ATM-01 è già al livello 2. Gli altri livelli arriveranno nelle prossime versioni.');return}
+ this.level=2;$('automation').textContent='Livello 2 · Assistita';speak('Upgrade completato. ATM-01 dispone ora di sequenze programmate e registrazione digitale automatica. Il tecnico supervisiona il processo e interviene in caso di anomalie.')}
 }
-const config={type:Phaser.AUTO,parent:'game',width:1200,height:675,backgroundColor:'#0a1722',physics:{default:'arcade',arcade:{debug:false}},scale:{mode:Phaser.Scale.FIT,autoCenter:Phaser.Scale.CENTER_BOTH},scene:[MriyaScene]};
-new Phaser.Game(config);
-</script>
-</body>
-</html>
+new Phaser.Game({type:Phaser.AUTO,parent:'game',width:1672,height:545,backgroundColor:'#071522',scale:{mode:Phaser.Scale.FIT,autoCenter:Phaser.Scale.CENTER_BOTH},scene:[Mriya]});
+</script></body></html>

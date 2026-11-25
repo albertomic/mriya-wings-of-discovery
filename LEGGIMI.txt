@@ -1,21 +1,22 @@
-MRIYA – WINGS OF DISCOVERY
-Prototipo giocabile v0.1
+MRIYA – WINGS OF DISCOVERY | PROTOTIPO v0.2
 
-AVVIO SU WINDOWS
-1. Estrai tutto il contenuto dello ZIP in una cartella.
-2. Fai doppio clic su AVVIA_GIOCO.bat.
-3. Si aprirà il browser su http://localhost:8000.
+AGGIORNAMENTO
+Questa versione sostituisce la grafica geometrica provvisoria con un ambiente illustrato di concept, una vista esterna, un hotspot ATM-01, zoom e comandi riorganizzati.
 
-È necessario essere connessi a Internet perché Phaser 3 viene caricato dalla CDN.
-Se il browser non si apre automaticamente, copia l'indirizzo http://localhost:8000.
+PUBBLICAZIONE SU GITHUB
+1. Estrai lo ZIP.
+2. Apri il repository GitHub mriya-wings-of-discovery.
+3. Seleziona Add file > Upload files.
+4. Carica index.html e la cartella assets completa (deve contenere mriya_interior.jpg e mriya_exterior.jpg).
+5. Se GitHub chiede come gestire i file già esistenti, conferma la sostituzione di index.html.
+6. Premi Commit changes. GitHub Pages aggiornerà il sito automaticamente.
+
+Non caricare soltanto index.html: le due immagini nella cartella assets sono necessarie.
 
 COMANDI
-- Freccia sinistra/destra oppure A/D: muovi l'operatore.
-- E: interagisci con ATM-01 quando sei vicino.
-- Vista esterna/interna: alterna le visuali.
-- Vai ad ATM-01: sposta l'operatore al laboratorio.
-- Avvia analisi: simula la procedura scientifica.
-- Upgrade L2: attiva l'automazione assistita.
+- Frecce oppure A/D: spostamento dell'operatore.
+- E: interazione vicino ad ATM-01.
+- Pulsanti: vista esterna/interna, raggiungi laboratorio, analisi, upgrade L2, zoom.
 
-NOTA
-È un prototipo di gameplay. La grafica, le proporzioni e la disposizione degli ambienti sono provvisorie e non costituiscono una ricostruzione tecnica certificata dell'An-225.
+NOTA DI PROGETTO
+L'ambiente illustrato è un concept artistico generato per definire la direzione visiva. Non è una ricostruzione tecnica certificata dell'An-225. Le dimensioni, i percorsi e la disposizione definitiva dovranno rispettare le caratteristiche reali già definite nel progetto.
