@@ -2,120 +2,84 @@
 <html lang="it">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Mriya – Wings of Discovery | v0.2</title>
+<title>Mriya – Wings of Discovery | Prototype</title>
 <style>
-*{box-sizing:border-box}body{margin:0;background:#07121e;color:#e9f2f8;font-family:Arial,Helvetica,sans-serif}
-header{height:74px;padding:12px 22px;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(90deg,#0b2941,#102c46 60%,#091a2b);border-bottom:1px solid #31536d}
-.logo{font-size:21px;font-weight:800;letter-spacing:1px}.logo small{display:block;font-size:10px;letter-spacing:2px;color:#9ec4d8;margin-top:4px;font-weight:500}
-#status{font-size:12px;color:#9fc1d4}
-main{max-width:1600px;margin:auto;padding:16px;display:grid;grid-template-columns:minmax(0,1fr) 310px;gap:14px}
-#stage{min-width:0;border:1px solid #31536d;border-radius:10px;overflow:hidden;background:#0b1b2a;box-shadow:0 12px 40px #0008}
-#game{width:100%;aspect-ratio:3.067/1}
-#game canvas{display:block;width:100%!important;height:100%!important}
-aside{background:linear-gradient(180deg,#10263a,#0a1928);border:1px solid #31536d;border-radius:10px;padding:15px;display:flex;flex-direction:column;gap:12px}
-h2{font-size:14px;letter-spacing:.7px;margin:0 0 9px;color:#bfe5f5}
-.panel{background:#071725;border:1px solid #29475f;border-radius:8px;padding:12px}
-#maria{font-size:13px;line-height:1.55;min-height:85px;color:#e0edf4}
-.metric{display:flex;justify-content:space-between;gap:8px;font-size:12px;margin:8px 0;color:#9db7c8}.metric b{color:#e5f2f8;text-align:right}
-.buttons{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-button{cursor:pointer;color:#e9f6fc;background:linear-gradient(#1b5274,#12344d);border:1px solid #4d91b5;border-radius:7px;padding:10px 8px;font-weight:700;font-size:12px}
-button:hover{filter:brightness(1.2)}button:disabled{opacity:.4;cursor:not-allowed}
-.note{font-size:11px;line-height:1.5;color:#8faaba}
-footer{text-align:center;color:#7893a5;font-size:11px;padding:0 16px 16px}
-@media(max-width:950px){main{grid-template-columns:1fr}aside{display:grid;grid-template-columns:1fr 1fr}aside>h2{grid-column:1/-1}}
-@media(max-width:600px){header{height:auto;align-items:flex-start;flex-direction:column;gap:7px}aside{display:flex}}
+:root{--bg:#08131d;--panel:rgba(9,22,33,.88);--line:rgba(160,194,214,.22);--cyan:#65d8e8;--gold:#e5bd78;--text:#eaf2f5;--muted:#8ea5b4}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:Inter,Segoe UI,Arial,sans-serif}
+#app{height:100%;display:flex;flex-direction:column;background:radial-gradient(ellipse at 50% 80%,#203849 0,#101f2c 48%,#07121c 100%)}
+.hud{height:48px;min-height:48px;display:flex;align-items:center;gap:20px;padding:0 22px;background:linear-gradient(180deg,rgba(17,34,47,.98),rgba(8,20,30,.96));border-bottom:1px solid #385366;box-shadow:0 5px 22px #0008;white-space:nowrap;z-index:5;font-size:12px;letter-spacing:.04em}
+.brand{font-weight:800;letter-spacing:.14em;color:#f1f6f8;font-size:13px}.brand span{color:var(--cyan)}.hudgroup{display:flex;align-items:center;gap:13px}.hudgroup.right{margin-left:auto}.metric{display:flex;gap:6px;align-items:center;color:var(--muted)}.metric b{color:#f2f7f8;font-weight:650;font-variant-numeric:tabular-nums}.dot{width:6px;height:6px;border-radius:50%;background:#65d8a6;box-shadow:0 0 8px #65d8a6}.sep{height:20px;width:1px;background:#496071}
+#stage{position:relative;flex:1;min-height:0;overflow:hidden}.sky{position:absolute;inset:0;background:linear-gradient(180deg,#152c3b 0%,#284353 48%,#182d3a 100%)}.horizon{position:absolute;left:0;right:0;bottom:19%;height:1px;background:#a8c1cb55;box-shadow:0 0 30px #9cc9d855}.cloud{position:absolute;width:230px;height:42px;border-radius:50%;background:#a9c2cc12;filter:blur(10px);animation:drift 42s linear infinite}.cloud.c1{top:18%;left:5%}.cloud.c2{top:32%;left:63%;animation-duration:58s}.cloud.c3{top:11%;left:83%;animation-duration:49s}@keyframes drift{to{transform:translateX(250px)}}
+.mission{position:absolute;left:22px;top:18px;width:275px;padding:13px 15px;background:linear-gradient(135deg,#0b1b28df,#102737c9);border:1px solid var(--line);border-left:2px solid var(--gold);box-shadow:0 10px 28px #0004;z-index:3}.eyebrow{font-size:9px;letter-spacing:.18em;color:var(--gold);font-weight:700}.mission h2{font-size:15px;margin:6px 0 5px;font-weight:650}.mission p{font-size:11px;line-height:1.45;color:#a9bdc8;margin:0}.progress{height:3px;background:#304958;margin-top:12px}.progress i{display:block;width:36%;height:100%;background:var(--gold)}
+.viewport{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:70px 3vw 35px}.plane-wrap{width:min(96vw,1500px);height:min(72vh,690px);position:relative;filter:drop-shadow(0 24px 22px #0006)}svg{width:100%;height:100%;overflow:visible}.shell{transition:transform .08s linear,opacity .08s linear}.inside{transition:opacity .08s linear}.zone{cursor:pointer;transition:filter .2s}.zone:hover{filter:brightness(1.25)}.zone-label{font:700 12px Inter,Arial;letter-spacing:.09em;fill:#d8e7ec}.small-label{font:10px Inter,Arial;fill:#91a9b7}.module-slot{fill:#172d39;stroke:#6a8a9b;stroke-width:1.3;stroke-dasharray:5 4}.module-text{font:700 10px Inter,Arial;fill:#a8c4d0;letter-spacing:.08em}.person{filter:drop-shadow(0 2px 2px #000)}
+.legend{position:absolute;right:22px;top:18px;width:205px;padding:12px 14px;background:#0a1a27d9;border:1px solid var(--line);z-index:3}.legend h3{font-size:10px;letter-spacing:.16em;color:var(--cyan);margin:0 0 9px}.legend div{font-size:10px;color:#a9bdc8;margin:6px 0;display:flex;align-items:center;gap:8px}.swatch{width:9px;height:9px;border-radius:2px;background:#426577}.swatch.lab{background:#2e8795}.swatch.log{background:#98764c}.swatch.ops{background:#567b9a}
+.maria{position:absolute;left:22px;bottom:20px;display:flex;align-items:center;gap:11px;padding:10px 14px;background:#071722e8;border:1px solid #416071;max-width:520px;z-index:4;box-shadow:0 8px 24px #0005}.maria .orb{width:26px;height:26px;border:1px solid var(--cyan);border-radius:50%;display:grid;place-items:center;color:var(--cyan);font-size:10px;box-shadow:0 0 14px #65d8e844}.maria strong{font-size:10px;letter-spacing:.12em;color:var(--cyan)}.maria p{font-size:11px;color:#c1d0d8;margin:3px 0 0;line-height:1.35}
+.controls{position:absolute;right:22px;bottom:20px;display:flex;gap:8px;z-index:4}.btn{border:1px solid #526c7b;background:#102735e8;color:#d8e6eb;padding:9px 13px;font-size:10px;letter-spacing:.08em;cursor:pointer}.btn:hover,.btn.active{border-color:var(--cyan);color:#fff;background:#174052}.zoomread{position:absolute;right:22px;bottom:66px;color:#a7bac4;font-size:10px;letter-spacing:.1em;z-index:4}.hint{position:absolute;left:50%;bottom:24px;transform:translateX(-50%);font-size:10px;color:#9fb4bf;letter-spacing:.06em;z-index:2;pointer-events:none}.tooltip{position:absolute;display:none;z-index:10;padding:9px 11px;background:#071722;border:1px solid #65d8e8;color:#dcebf0;font-size:11px;pointer-events:none;max-width:220px}.footerline{position:absolute;bottom:0;left:0;right:0;height:18%;background:linear-gradient(180deg,#132632,#0a151d);border-top:1px solid #52667466}
+@media(max-width:900px){.hud{gap:9px;padding:0 10px;font-size:10px}.brand{font-size:11px}.metric.optional{display:none}.mission{width:230px;left:10px;top:10px}.legend{right:10px;top:10px;width:170px}.viewport{padding:90px 0 40px}.maria{left:10px;bottom:10px;max-width:60%}.controls{right:10px;bottom:10px}.hint{display:none}}
 </style></head>
-<body>
-<header><div class="logo">MRIYA <span style="color:#70c9ec">—</span> WINGS OF DISCOVERY<small>SCIENTIFIC AIRBORNE RESEARCH PLATFORM</small></div><div id="status">PROTOTIPO v0.2 · SIMULAZIONE</div></header>
-<main>
-<section id="stage"><div id="game"></div></section>
-<aside>
-<h2>M.A.R.I.A. <span style="color:#57d4ee">● ONLINE</span></h2>
-<div class="panel"><div id="maria">Benvenuto a bordo. La visualizzazione interna del Mriya è pronta. Puoi esplorare la stiva e raggiungere ATM-01.</div></div>
-<div class="panel"><h2>STATO DI BORDO</h2>
-<div class="metric"><span>Ambiente</span><b id="environment">Stiva principale</b></div>
-<div class="metric"><span>Modulo</span><b id="module">ATM-01</b></div>
-<div class="metric"><span>Automazione</span><b id="automation">Livello 1 · Manuale</b></div>
-<div class="metric"><span>Analisi</span><b id="analysis">In attesa</b></div>
-</div>
-<div><h2>COMANDI</h2><div class="buttons">
-<button id="view">Vista esterna</button><button id="lab">Raggiungi ATM-01</button>
-<button id="analyze">Avvia analisi</button><button id="upgrade">Sblocca automazione L2</button>
-<button id="zoomIn">Zoom +</button><button id="zoomOut">Zoom −</button>
-</div><p class="note">Movimento: ← → oppure A / D. Premi E vicino al modulo ATM-01 per interagire. Puoi anche usare i comandi qui sopra.</p></div>
-<div class="panel note"><b style="color:#c5e5f2">Nota di progettazione</b><br>Questa è una prima direzione visiva, non la ricostruzione tecnica definitiva dell'aereo. La conversione scientifica e le attrezzature sono elementi di fantasia plausibile; la planimetria sarà raffinata usando i riferimenti reali già definiti.</div>
-</aside></main>
-<footer>Build 0.2 · Ambiente illustrato di concept · Prossimo obiettivo: rifinire la geometria dell'aereo e rendere esplorabili i diversi livelli</footer>
-<script src="https://cdn.jsdelivr.net/npm/phaser@3.80.1/dist/phaser.min.js"></script>
+<body><div id="app">
+<header class="hud"><div class="brand">MRIYA <span> / WINGS OF DISCOVERY</span></div><div class="sep"></div><div class="hudgroup"><div class="metric"><span>COMANDANTE</span><b>ALBERTO</b></div><div class="metric"><span>¤</span><b>12.450</b></div><div class="metric"><span>DATI</span><b>340</b></div><div class="metric optional"><span>ENERGIA</span><b>98%</b></div></div><div class="hudgroup right"><div class="dot"></div><div class="metric"><span>STATO</span><b>A TERRA</b></div><div class="sep"></div><div class="metric"><span>VEL.</span><b>0 km/h</b></div><div class="metric"><span>QUOTA</span><b>0 m</b></div><div class="metric optional"><span>ROTTA</span><b>— — —</b></div></div></header>
+<main id="stage"><div class="sky"><div class="cloud c1"></div><div class="cloud c2"></div><div class="cloud c3"></div><div class="horizon"></div><div class="footerline"></div></div>
+<section class="mission"><div class="eyebrow">TUTORIAL · FASE 02 / 05</div><h2>Esplora il Mriya</h2><p>Usa la rotellina per avvicinarti alla fusoliera e scoprire gli ambienti interni.</p><div class="progress"><i></i></div></section>
+<aside class="legend"><h3>SEZIONE FUNZIONALE</h3><div><i class="swatch log"></i> L1 · Logistica e carico</div><div><i class="swatch lab"></i> L2 · Moduli scientifici</div><div><i class="swatch ops"></i> L3 · Supporto e operazioni</div><div style="margin-top:10px;color:#718f9f">U1 · Centro operativo superiore</div></aside>
+<div class="viewport"><div class="plane-wrap"><svg id="plane" viewBox="0 0 1440 650" role="img" aria-label="Sezione laterale interattiva dell'Antonov An-225">
+<defs>
+ <linearGradient id="fuselage" x2="0" y2="1"><stop stop-color="#dce6e9"/><stop offset=".48" stop-color="#91a8b3"/><stop offset="1" stop-color="#4c6472"/></linearGradient>
+ <linearGradient id="floor" x2="0" y2="1"><stop stop-color="#738c99"/><stop offset="1" stop-color="#263c49"/></linearGradient>
+ <linearGradient id="glass" x2="0" y2="1"><stop stop-color="#a5d9e7"/><stop offset="1" stop-color="#315d70"/></linearGradient>
+ <clipPath id="bodyClip"><path d="M120 320 Q145 220 285 208 L1170 208 Q1275 210 1330 285 Q1360 320 1330 355 Q1275 430 1170 432 L285 432 Q145 420 120 320Z"/></clipPath>
+ <filter id="glow"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<!-- ombra e struttura ali -->
+<path d="M470 350 L710 500 L820 500 L710 350 L1020 350 L1130 500 L1210 500 L1090 335Z" fill="#627987" stroke="#9aadb5" stroke-width="3" opacity=".8"/>
+<path d="M980 315 L1170 130 L1210 130 L1100 320Z" fill="#708894" stroke="#b2c1c7" stroke-width="3"/>
+<!-- interni -->
+<g class="inside" id="inside" opacity="0">
+ <path d="M135 320 Q155 224 285 215 L1170 215 Q1270 218 1320 290 L1320 350 Q1270 422 1170 425 L285 425 Q155 416 135 320Z" fill="#172c38" stroke="#c6d3d8" stroke-width="4"/>
+ <g clip-path="url(#bodyClip)">
+  <rect x="145" y="215" width="1180" height="215" fill="#213744"/>
+  <!-- upper deck U1 -->
+  <path d="M340 224 L1055 224 L1055 285 L340 285Z" fill="#314e5d" stroke="#7894a2" stroke-width="2"/>
+  <path d="M355 232 H1038" stroke="#6b8795" stroke-width="2"/>
+  <g fill="#152b38" stroke="#6ba1b1" stroke-width="1.5"><rect x="410" y="237" width="82" height="37" rx="3"/><rect x="510" y="237" width="82" height="37" rx="3"/><rect x="610" y="237" width="82" height="37" rx="3"/><rect x="710" y="237" width="82" height="37" rx="3"/><rect x="810" y="237" width="82" height="37" rx="3"/></g>
+  <g fill="#64d4df" opacity=".8"><path d="M420 245h60v3h-60zM520 245h60v3h-60zM620 245h60v3h-60zM720 245h60v3h-60zM820 245h60v3h-60z"/></g>
+  <text x="370" y="218" class="zone-label">U1 · CENTRO OPERATIVO</text><text x="910" y="258" class="small-label">POSTAZIONI SCIENTIFICHE</text>
+  <!-- stiva / pavimento -->
+  <rect x="150" y="286" width="1170" height="142" fill="#1b303c"/>
+  <path d="M155 401 H1310" stroke="#a6bbc4" stroke-width="5"/><path d="M155 409 H1310" stroke="#526d7a" stroke-width="3"/>
+  <!-- zone color blocks -->
+  <g class="zone" data-info="L1 · Area logistica: carichi speciali, ancoraggi e movimentazione interna."><rect x="175" y="305" width="260" height="91" rx="5" fill="#806342" opacity=".55" stroke="#d0aa70" stroke-width="2"/><text x="194" y="327" class="zone-label">L1 · LOGISTICA</text><rect x="205" y="343" width="75" height="42" rx="3" fill="#b08a58" opacity=".7"/><rect x="295" y="343" width="115" height="42" rx="3" fill="#9b794f" opacity=".7"/><path d="M185 393h235" stroke="#d5b17c" stroke-width="3" stroke-dasharray="8 5"/></g>
+  <g class="zone" data-info="L2 · Area scientifica: alloggiamenti predisposti per i moduli ATM-01, MET-01 e GEO-01."><rect x="455" y="305" width="510" height="91" rx="5" fill="#216c79" opacity=".56" stroke="#6ad5df" stroke-width="2"/><text x="475" y="327" class="zone-label">L2 · MODULI SCIENTIFICI</text>
+   <rect class="module-slot" x="480" y="341" width="135" height="43" rx="3"/><rect class="module-slot" x="630" y="341" width="135" height="43" rx="3"/><rect class="module-slot" x="780" y="341" width="160" height="43" rx="3"/><text x="493" y="367" class="module-text">ATM-01 · VUOTO</text><text x="643" y="367" class="module-text">MET-01 · VUOTO</text><text x="793" y="367" class="module-text">GEO-01 · VUOTO</text>
+   <path d="M490 389v8m20-8v8m20-8v8m20-8v8m20-8v8m60-8v8m20-8v8m20-8v8m20-8v8m20-8v8m60-8v8m20-8v8m20-8v8" stroke="#75c9d1" stroke-width="2"/>
+  </g>
+  <g class="zone" data-info="L3 · Supporto operativo: manutenzione, attrezzature mobili e accesso equipaggio alla stiva."><rect x="985" y="305" width="290" height="91" rx="5" fill="#425f78" opacity=".65" stroke="#9bb9d0" stroke-width="2"/><text x="1005" y="327" class="zone-label">L3 · SUPPORTO</text><rect x="1010" y="343" width="85" height="42" rx="3" fill="#718da0"/><rect x="1110" y="343" width="135" height="42" rx="3" fill="#607e91"/><text x="1021" y="369" class="small-label">BANCO</text><text x="1122" y="369" class="small-label">ATTREZZI</text></g>
+  <!-- scale/accessi -->
+  <path d="M1030 286 L1070 305 M1038 286 L1078 305 M1046 286 L1086 305 M1054 286 L1094 305" stroke="#b8c8ce" stroke-width="3"/><path d="M350 285v16m12-16v16m12-16v16m12-16v16" stroke="#b8c8ce" stroke-width="2"/>
+  <!-- luci -->
+  <g fill="#7de5ec" filter="url(#glow)"><circle cx="250" cy="297" r="3"/><circle cx="450" cy="297" r="3"/><circle cx="680" cy="297" r="3"/><circle cx="910" cy="297" r="3"/><circle cx="1200" cy="297" r="3"/></g>
+  <!-- person -->
+  <g class="person" transform="translate(710 365)"><circle cx="0" cy="-18" r="7" fill="#e7c8a2"/><path d="M-7 -10 Q0 -15 7 -10 L9 12 L-9 12Z" fill="#d9e5e9"/><path d="M-5 11l-5 15m14-15 5 15" stroke="#d9e5e9" stroke-width="4" stroke-linecap="round"/><path d="M-7 -5l-10 9m24-9 10 8" stroke="#d9e5e9" stroke-width="3" stroke-linecap="round"/></g>
+ </g>
+</g>
+<!-- fusoliera esterna: guscio superiore e inferiore separabili -->
+<g class="shell" id="shellTop"><path d="M120 320 Q145 220 285 208 L1170 208 Q1275 210 1330 285 Q1360 320 1330 320 L120 320Z" fill="url(#fuselage)" stroke="#e1e9eb" stroke-width="4"/><path d="M250 237 Q330 220 470 220 H1155" fill="none" stroke="#f8ffff" stroke-width="3" opacity=".55"/><path d="M280 252H1190" stroke="#607b89" stroke-width="2" opacity=".65"/><text x="600" y="275" fill="#3b5664" font-size="24" font-weight="800" letter-spacing="8">ANTONOV</text><text x="680" y="296" fill="#45616e" font-size="12" letter-spacing="5">AN-225 MRIYA</text></g>
+<g class="shell" id="shellBottom"><path d="M120 320 L1330 320 Q1360 320 1330 355 Q1275 430 1170 432 L285 432 Q145 420 120 320Z" fill="url(#fuselage)" stroke="#e1e9eb" stroke-width="4"/><path d="M245 392 Q400 421 570 421 H1160" fill="none" stroke="#405c6b" stroke-width="4" opacity=".7"/><path d="M310 410H1170" stroke="#eaf2f4" stroke-width="2" opacity=".3"/></g>
+<!-- muso, coda, finestrature -->
+<path d="M119 320 Q145 220 285 208 L285 432 Q145 420 119 320Z" fill="#9fb2ba" stroke="#e3eaec" stroke-width="3" opacity=".94"/>
+<path d="M1180 208 Q1275 210 1330 285 L1330 355 Q1275 430 1180 432Z" fill="#8299a5" stroke="#e3eaec" stroke-width="3"/>
+<g fill="#284756" stroke="#d3e1e5" stroke-width="2"><path d="M1260 240l35 16-18 24-33-15z"/><path d="M1260 400l35-16-18-24-33 15z"/></g>
+<g fill="#d8e6ea" opacity=".85"><circle cx="310" cy="218" r="3"/><circle cx="340" cy="218" r="3"/><circle cx="370" cy="218" r="3"/><circle cx="400" cy="218" r="3"/></g>
+<!-- carrelli -->
+<g stroke="#aebfc6" stroke-width="7" fill="none"><path d="M480 430v48m-20 0h40M1050 430v48m-20 0h40"/></g><g fill="#18232a" stroke="#91a5ae" stroke-width="3"><circle cx="468" cy="486" r="13"/><circle cx="492" cy="486" r="13"/><circle cx="1038" cy="486" r="13"/><circle cx="1062" cy="486" r="13"/></g>
+</svg></div></div>
+<div class="zoomread" id="zoomRead">SEZIONE INTERNA · 0%</div><div class="hint">SCORRI LA ROTELLINA PER APRIRE / CHIUDERE LA COPERTURA</div>
+<div class="maria"><div class="orb">M</div><div><strong>M.A.R.I.A.</strong><p id="mariaText">Benvenuto a bordo. Avvicinati alla fusoliera con la rotellina per osservare la configurazione scientifica.</p></div></div>
+<div class="controls"><button class="btn" id="closeBtn">VISTA ESTERNA</button><button class="btn active" id="openBtn">SEZIONE INTERNA</button></div><div class="tooltip" id="tooltip"></div>
+</main></div>
 <script>
-const $=id=>document.getElementById(id);let sceneRef;
-function speak(t){$('maria').textContent=t}
-class Mriya extends Phaser.Scene{
- constructor(){super('mriya');this.interior=true;this.level=1;this.zoom=1;this.playerX=610;this.sampled=false}
- preload(){this.load.image('inside','assets/mriya_interior.jpg');this.load.image('outside','assets/mriya_exterior.jpg')}
- create(){
-  sceneRef=this;this.cameras.main.setBackgroundColor('#071522');
-  this.bg=this.add.image(0,0,'inside').setOrigin(0,0);this.bg.setDisplaySize(1672,545);
-  this.drawLabels();
-  this.player=this.add.container(this.playerX,418);
-  const glow=this.add.circle(0,0,23,0x21c8ff,.16);
-  const body=this.add.ellipse(0,-20,17,34,0x203e55).setStrokeStyle(2,0x6edbff);
-  const head=this.add.circle(0,-45,8,0xe2b994).setStrokeStyle(1,0x6edbff);
-  const pack=this.add.rectangle(-9,-19,5,22,0xe5b84f);
-  this.player.add([glow,body,head,pack]);
-  this.cameras.main.setBounds(0,0,1672,545);
-  this.cameras.main.setZoom(1);
-  this.keys=this.input.keyboard.addKeys('LEFT,RIGHT,A,D,E');
-  this.input.keyboard.on('keydown-E',()=>this.interact());
-  $('view').onclick=()=>this.toggleView();$('lab').onclick=()=>this.goLab();
-  $('analyze').onclick=()=>this.analyze();$('upgrade').onclick=()=>this.upgrade();
-  $('zoomIn').onclick=()=>this.setZoom(Math.min(1.55,this.zoom+.15));
-  $('zoomOut').onclick=()=>this.setZoom(Math.max(.85,this.zoom-.15));
-  this.addHotspot();
- }
- drawLabels(){
-  this.add.rectangle(820,25,360,36,0x071a2b,.82).setStrokeStyle(1,0x4c9fc3);
-  this.add.text(650,14,'STIVA PRINCIPALE · CONFIGURAZIONE SCIENTIFICA',{font:'bold 15px Arial',color:'#d9f2ff'});
-  this.add.rectangle(1010,486,250,34,0x061a2b,.9).setStrokeStyle(1,0x4aa4c8);
-  this.add.text(905,475,'ATM-01 · LABORATORIO ATMOSFERICO',{font:'bold 13px Arial',color:'#9ce8ff'});
- }
- addHotspot(){
-  this.hotspot=this.add.circle(1010,325,65,0x36cfff,.07).setStrokeStyle(2,0x52d8ff,.9);
-  this.hotspot.setInteractive({useHandCursor:true});
-  this.hotspot.on('pointerdown',()=>this.interact());
-  this.pulse=this.tweens.add({targets:this.hotspot,alpha:{from:.25,to:1},scale:{from:.9,to:1.12},duration:1100,yoyo:true,repeat:-1});
- }
- update(){
-  if(!this.interior)return;
-  let v=0;if(this.keys.LEFT.isDown||this.keys.A.isDown)v=-3.3;if(this.keys.RIGHT.isDown||this.keys.D.isDown)v=3.3;
-  this.playerX=Phaser.Math.Clamp(this.playerX+v,70,1580);this.player.x=this.playerX;
-  if(this.playerX>850&&this.playerX<1160){$('environment').textContent='ATM-01';}
-  else $('environment').textContent='Stiva principale';
- }
- toggleView(){
-  this.interior=!this.interior;this.children.removeAll();this.tweens.killAll();
-  if(this.interior){
-   this.bg=this.add.image(0,0,'inside').setOrigin(0,0).setDisplaySize(1672,545);this.drawLabels();
-   this.player=this.add.container(this.playerX,418);
-   this.player.add([this.add.circle(0,0,23,0x21c8ff,.16),this.add.ellipse(0,-20,17,34,0x203e55).setStrokeStyle(2,0x6edbff),this.add.circle(0,-45,8,0xe2b994).setStrokeStyle(1,0x6edbff)]);
-   this.addHotspot();this.cameras.main.setBounds(0,0,1672,545);$('environment').textContent='Stiva principale';$('view').textContent='Vista esterna';
-   speak('Vista interna attivata. La stiva è il cuore operativo della piattaforma scientifica. Raggiungi ATM-01 per iniziare.');
-  }else{
-   this.bg=this.add.image(0,0,'outside').setOrigin(0,0).setDisplaySize(1672,545);
-   this.add.rectangle(836,510,1672,70,0x071b2a,.7);
-   this.add.text(45,475,'ANTONOV AN-225 MRIYA',{font:'bold 27px Arial',color:'#102d42',stroke:'#eaf6fb',strokeThickness:2});
-   this.add.text(48,510,'Piattaforma scientifica internazionale · scenario alternativo',{font:'14px Arial',color:'#173c55'});
-   $('view').textContent='Vista interna';speak('Vista esterna attivata. Il Mriya è pronto per la prossima missione.');
-  }
- }
- setZoom(z){this.zoom=z;this.cameras.main.setZoom(z);if(this.interior)this.cameras.main.centerOn(this.playerX,270)}
- goLab(){if(!this.interior)this.toggleView();this.playerX=1010;this.player.x=this.playerX;this.cameras.main.centerOn(this.playerX,270);speak('Sei arrivato davanti al laboratorio ATM-01. Premi E oppure Avvia analisi per iniziare la procedura.')}
- interact(){if(!this.interior)return;if(Math.abs(this.playerX-1010)<190)this.analyze();else speak('Prosegui lungo la stiva verso destra per raggiungere ATM-01.')}
- analyze(){if(!this.interior){speak('Entra nella vista interna per utilizzare le postazioni scientifiche.');return}
- if(Math.abs(this.playerX-1010)>220){this.goLab();return}
- $('analysis').textContent='Completata';speak(this.level===1?'Procedura manuale completata. L’operatore prepara il filtro, avvia l’analizzatore e registra il campione. Dati dimostrativi acquisiti.':'Procedura assistita completata. M.A.R.I.A. ha programmato l’acquisizione e registrato i dati; l’operatore resta in supervisione.');}
- upgrade(){if(this.level===2){speak('ATM-01 è già al livello 2. Gli altri livelli arriveranno nelle prossime versioni.');return}
- this.level=2;$('automation').textContent='Livello 2 · Assistita';speak('Upgrade completato. ATM-01 dispone ora di sequenze programmate e registrazione digitale automatica. Il tecnico supervisiona il processo e interviene in caso di anomalie.')}
-}
-new Phaser.Game({type:Phaser.AUTO,parent:'game',width:1672,height:545,backgroundColor:'#071522',scale:{mode:Phaser.Scale.FIT,autoCenter:Phaser.Scale.CENTER_BOTH},scene:[Mriya]});
+(()=>{const stage=document.getElementById('stage'),topShell=document.getElementById('shellTop'),bottomShell=document.getElementById('shellBottom'),inside=document.getElementById('inside'),read=document.getElementById('zoomRead'),msg=document.getElementById('mariaText'),openBtn=document.getElementById('openBtn'),closeBtn=document.getElementById('closeBtn'),tip=document.getElementById('tooltip');let reveal=0;
+function render(){const p=reveal/100;inside.style.opacity=Math.max(0,(p-.08)/.72);topShell.style.transform=`translateY(${-p*155}px)`;bottomShell.style.transform=`translateY(${p*155}px)`;topShell.style.opacity=1-p*.96;bottomShell.style.opacity=1-p*.96;read.textContent=`SEZIONE INTERNA · ${Math.round(reveal)}%`;openBtn.classList.toggle('active',reveal>10);closeBtn.classList.toggle('active',reveal<10);if(reveal>85)msg.textContent='Sezione aperta. La stiva è organizzata in tre aree funzionali; gli alloggiamenti scientifici sono ancora vuoti.';else if(reveal>35)msg.textContent='La copertura si sta ritraendo. Puoi distinguere il centro operativo U1 e le zone della stiva.';else if(reveal<10)msg.textContent='Vista esterna del Mriya. Usa la rotellina per aprire gradualmente la copertura e osservare gli ambienti interni.';}
+function set(v){reveal=Math.max(0,Math.min(100,v));render()}stage.addEventListener('wheel',e=>{e.preventDefault();set(reveal+(e.deltaY>0?5:-5))},{passive:false});openBtn.onclick=()=>set(100);closeBtn.onclick=()=>set(0);window.addEventListener('keydown',e=>{if(e.key==='ArrowUp')set(reveal+5);if(e.key==='ArrowDown')set(reveal-5)});
+document.querySelectorAll('.zone').forEach(z=>{z.addEventListener('pointermove',e=>{tip.style.display='block';tip.textContent=z.dataset.info;tip.style.left=Math.min(e.clientX+14,innerWidth-245)+'px';tip.style.top=Math.min(e.clientY+14,innerHeight-90)+'px'});z.addEventListener('pointerleave',()=>tip.style.display='none');z.addEventListener('click',()=>{msg.textContent=z.dataset.info})});render();})();
 </script></body></html>
