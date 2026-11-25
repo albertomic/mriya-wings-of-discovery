@@ -1,0 +1,21 @@
+MRIYA – WINGS OF DISCOVERY
+Prototipo giocabile v0.1
+
+AVVIO SU WINDOWS
+1. Estrai tutto il contenuto dello ZIP in una cartella.
+2. Fai doppio clic su AVVIA_GIOCO.bat.
+3. Si aprirà il browser su http://localhost:8000.
+
+È necessario essere connessi a Internet perché Phaser 3 viene caricato dalla CDN.
+Se il browser non si apre automaticamente, copia l'indirizzo http://localhost:8000.
+
+COMANDI
+- Freccia sinistra/destra oppure A/D: muovi l'operatore.
+- E: interagisci con ATM-01 quando sei vicino.
+- Vista esterna/interna: alterna le visuali.
+- Vai ad ATM-01: sposta l'operatore al laboratorio.
+- Avvia analisi: simula la procedura scientifica.
+- Upgrade L2: attiva l'automazione assistita.
+
+NOTA
+È un prototipo di gameplay. La grafica, le proporzioni e la disposizione degli ambienti sono provvisorie e non costituiscono una ricostruzione tecnica certificata dell'An-225.
